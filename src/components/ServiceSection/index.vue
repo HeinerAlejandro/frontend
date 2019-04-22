@@ -9,22 +9,20 @@
             align-center
             >
             <v-flex>
-                <h2 class = 'text-section text-center'>SERVICIOS PICFAMILY</h2>
+                <h2 class = 'text-section text-center color-white'>SERVICIOS PICFAMILY</h2>
             </v-flex>
             <v-flex>
-                <p class = 'text-center margin'>Te garantizamos al 100% tu disfrute y el de tu familia, ofreciendote los siguientes servicios picfamily</p>
+                <p class = 'text-center margin color-white description-section'>Te garantizamos al 100% tu disfrute y el de tu familia, ofreciendote los siguientes servicios picfamily</p>
             </v-flex>
         </v-layout>
         <v-layout
-            class = 'text-center' 
-            row 
+            class = 'space-bottom' 
             wrap
-            fill-height
             justify-space-around>
             <v-flex 
                 v-for = 'service in services'
                 :key="service.title"
-                xs10 md2 lg3>
+                xs10 md3 lg3>
                 <Service :service = 'service'/>
             </v-flex>
 
@@ -67,11 +65,23 @@
 </script>
 
 <style>
+
+    .space-bottom{
+        margin-top: 80px;
+    }
+
+    .color-white{
+        color: white;    
+    }
+
     #service-section{
-        padding: 60px;
+        background: url('./images/servicios.jpg');
+        background-attachment: fixed;
+        background-position: center;
+        height: 100vh;
     }
 
     .margin{
-        padding : 30px 0 30px 0; 
+        padding : 70px 0 30px 0; 
     }
 </style>

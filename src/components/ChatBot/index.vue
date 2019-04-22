@@ -61,16 +61,33 @@
             sendMessage(message){
                
                 if(message.data.text.length > 0){
-                    console.log("enviando mensaje")
-                    fetch(window.location.origin+'/chatbot')
+                  
+                    fetch(window.location.origin+'/chatbot', {
+                        method : 'post', body : JSON.stringify({
+                            message : message.data.text
+                        }),
+                        headers : {
+                            'Content-Type':'application/json'
+                        }
+                    })
                         .then(response => (
                            response.json()
                         ))
-                        .then(json => this.onMessageWasSent({
-                            author : 'me', 
-                            type: 'text',
-                            data: { text: message }
-                        }))
+                        .then(json => {
+                            console.log(json)
+                            this.onMessageWasSent({
+                                author : 'me', 
+                                type: 'text',
+                                data: { text: message.data.text }
+                            })
+
+                             this.onMessageWasSent({
+                                author : 'Godmos', 
+                                type: 'text',
+                                data: { text: json.message }
+                            })
+                        
+                        })
                 }
             },
             onMessageWasSent(message){

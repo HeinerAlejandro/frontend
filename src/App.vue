@@ -1,11 +1,15 @@
 <template>
   <v-app>
+     
     <v-content>
+      <notifications group="success" position = 'top center'/>
       <Header />
       <ServiceSection />
       <ProductSection />
       <RegistrationSection />
+      <Footer />
       <ButtonChatBot />
+     
     </v-content>
   </v-app>
 </template>
@@ -17,6 +21,7 @@
   import ProductSection from './components/ProductSection'
   import RegistrationSection from './components/RegistrationSection'
   import ButtonChatBot from './components/ChatBot'
+  import Footer from './components/foo.vue'
 
   export default {
     name: 'App',
@@ -25,7 +30,8 @@
       ServiceSection,
       ProductSection,
       RegistrationSection,
-      ButtonChatBot
+      ButtonChatBot,
+      Footer
     },
     data () {
       return {
@@ -52,10 +58,15 @@
 
   .section{
     height: 100vh;
-  
   }
 
   .text-section{
-    font-family: 'Anton', sans-serif;
+      margin-top: 50px;
+      font-size: 4rem;
+     font-family: 'Amaranth', sans-serif;
+  }
+
+  .description-section{
+    font-size: 1.2rem;
   }
 </style>

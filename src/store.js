@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const handleErrors = error => {
     
 }
@@ -10,10 +12,14 @@ var store = {
         user : {},
         token : null
     },
+    resolvePromise(promise, operation){
+        promise
+            .then(data => operation(data))
+    },
     initRegistrationAction(data_registration){
 
         const body = new FormData(data_registration)
-
+        console.log(body)
         const options = {
             method : 'post',
             body
@@ -30,21 +36,34 @@ var store = {
     },
     initAuthenticationAction(data_login){
 
-        const body = new FormData(data_login)
-        
+        const body = new FormData()
+
+        body.append('email', data_login.email)
+        body.append('password', data_login.password)
+
         let options = {
             method : 'post',
             body
         }
-
+        
         const url = origin + '/login/'
 
         const opWithData = data => {
-            this.setToken(data.token)
+           
+            this.resolvePromise(data, data => {
+
+                this.setToken(data.key)
+                localStorage.setItem('token', data.key)
+
+                Vue.notify({
+                    group : 'success',
+                    title: 'Operacion completada',
+                    text: '¡Su autenticacion se realizo satisfactoriamente!'
+                })
+            }) 
         }
 
         this.fetchData(url, options, opWithData)
-
     },
     setToken(token){
         this.token = token
@@ -62,7 +81,7 @@ var store = {
             const url = origin + '/user'
 
             const opWithData = data => {
-                this.setUser(data)
+                this.resolvePromise(data, (data) => this.setUser(data))
             }
 
             this.fetchData(url, options, opWithData)
@@ -75,8 +94,9 @@ var store = {
 
         fetch(path, options)
             .then( response => {
+               
                 const json = response.json()
-
+               
                 if(response.ok)
                     opWithData(json)
                 else

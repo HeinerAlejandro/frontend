@@ -18,7 +18,12 @@
          <v-layout class = 'content-form-login' column justify-center align-center>
         <v-flex>
           <FormLogin 
+            v-show = 'true'
             :submit = 'authentication' />
+
+            <div v-show = 'false'>
+                <h4>Bienvenido {{sharedState.user.username}}</h4>
+            </div>
         </v-flex>
     </v-layout>
         
@@ -76,7 +81,8 @@
     }
     .slogan{
         position: relative;
-        top: 60%;
+        top: 52%;
+         font-family: 'Amaranth', sans-serif;
     }
 
     .title-position-header{
