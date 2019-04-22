@@ -44,11 +44,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'allauth',
+    'allauth.account',
     'rest_auth',
     'rest_auth.registration',
     'products',
-    'authentication'
+    'authentication',
+    'chatBot',
+    'corsheaders', 
 ]
+
+ACCOUNT_AUTHENTICATION_METHOD ='email'
+ACCOUNT_EMAIL_REQUIRED = True
 
 SITE_ID = 1
 
@@ -56,6 +62,7 @@ TEMPLATES_DIR = os.path.join (BASE_DIR, 'templates')
 FRONTEND_DIR = os.path.join (BASE_DIR, 'frontend')
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +71,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK  = { 
+    'DEFAULT_AUTHENTICATION_CLASSES' : ( 
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+           # django-oauth- kit de herramientas> = 1.0.0
+    ), 
+}
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'PicFamily.urls'
 

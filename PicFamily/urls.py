@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name = 'application.html'), name = 'index'),
     path('', include('products.urls')),
-    path("", include('authentication.urls'))
+    path('', include('authentication.urls')),
+    path('', include('chatBot.urls')),
 ]
 
 if settings.DEBUG == True:
