@@ -1,0 +1,3 @@
+[submodule "chatBot/bot "]
+	path = chatBot/bot
+	url = git@HeinerAlejandro.org:picfamily.git
