@@ -23,8 +23,10 @@
                     :items = 'select_items'
                     label="tipo de vista"
                     >
-                    <div>Cartas</div>
-                    <div>Miniaturas</div>
+                    <div 
+                        for = 'style in select_items'>
+                        {{style}}
+                    </div>
                 </v-select>
             </v-flex>
         </v-layout>
@@ -35,21 +37,24 @@
                 <v-flex
                     lg3
                     md4
-                    xs10
+                    xs9
                     v-for='product in products_show'
                      :key = 'product.title'
                      >
-                    <ProductItem :product = 'product' />
+                    <ProductItem
+                        :product = 'product' 
+                        :presentation = 'view_type'/>
                 </v-flex>
             </v-layout>
         </v-container>
 
-        <v-layout justify-center>
-            <v-flex xs8>
+        <v-layout row justify-center class = 'margin-paginator'>
+            <v-flex xs8 md5 lg5 class = 'text-center'>
                
                 <v-pagination
                     v-model = "page"
-                    :lenght = "products.length/max_show + 1"
+                    @input = "obtainSelectedPage"
+                    :length = "(products.length/max_show) + 1"
                     :total-visible = "8"
                 />
             </v-flex>
@@ -72,12 +77,18 @@
                 select_items : ['CARTAS', 'MINIATURAS'],
                 show_select : window.screen.width < 1024 || !this.products ? false : true,
                 page : 1,
-                max_show : 8
+                max_show : window.screen.width <= 950 ? 1 : 8,
             })
         },
         methods : {
             obtainSelectedPage(value){
                 this.page = value
+
+                this.products_show = this.products.slice(
+                    this.page * this.max_show - this.max_show,
+                    this.page * this.max_show
+                    )
+
             }
         },
         components : {
@@ -105,6 +116,7 @@
 </script>
 
 <style>
+
 
 .title-section{
     width: 400px;

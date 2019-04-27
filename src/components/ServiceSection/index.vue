@@ -22,7 +22,7 @@
             <v-flex 
                 v-for = 'service in services'
                 :key="service.title"
-                xs10 md3 lg3>
+                xs8 md3 lg3>
                 <Service :service = 'service'/>
             </v-flex>
 
@@ -78,7 +78,7 @@
         background: url('./images/servicios.jpg');
         background-attachment: fixed;
         background-position: center;
-        height: 100vh;
+        
     }
 
     .margin{

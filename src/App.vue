@@ -6,6 +6,7 @@
       <Header />
       <ServiceSection />
       <ProductSection />
+      <PlacesSection />
       <RegistrationSection />
       <Footer />
       <ButtonChatBot />
@@ -19,6 +20,7 @@
   import Header from './components/Header'
   import ServiceSection from './components/ServiceSection'
   import ProductSection from './components/ProductSection'
+  import PlacesSection from './components/PlacesSection'
   import RegistrationSection from './components/RegistrationSection'
   import ButtonChatBot from './components/ChatBot'
   import Footer from './components/foo.vue'
@@ -29,6 +31,7 @@
       Header,
       ServiceSection,
       ProductSection,
+      PlacesSection,
       RegistrationSection,
       ButtonChatBot,
       Footer

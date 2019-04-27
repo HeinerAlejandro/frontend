@@ -36,7 +36,7 @@
     .content-service{
         opacity: .5;
         text-align: justify;
-       
+        margin-bottom: 50px;
     }
 
     .content-service h3{

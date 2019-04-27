@@ -74,7 +74,7 @@
                            response.json()
                         ))
                         .then(json => {
-                            console.log(json)
+                            
                             this.onMessageWasSent({
                                 author : 'me', 
                                 type: 'text',

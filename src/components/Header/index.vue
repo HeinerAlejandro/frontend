@@ -7,10 +7,10 @@
 
         
         <v-layout  class = 'text-center  nav'  lg7 justify-space-around justify-center>
-            <v-flex><span><a>servicios</a></span></v-flex>
-            <v-flex><span><a>productos</a></span></v-flex>
-            <v-flex><span><a>reservaciones</a></span></v-flex>
-            <v-flex><span><a>registro</a></span></v-flex>
+            <v-flex><span><a href="#" v-scroll-to="'#service-section'">servicios</a></span></v-flex>
+            <v-flex><span><a href="#" v-scroll-to="'#product-section'">productos</a></span></v-flex>
+            <v-flex><span><a href="#" v-scroll-to="'#section-place'">espacios</a></span></v-flex>
+            <v-flex><span><a href="#" v-scroll-to="'#registration'">registro</a></span></v-flex>
         </v-layout>
 
         <h1 class = 'text-center title-position-header'>PicFamily</h1>
