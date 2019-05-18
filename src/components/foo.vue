@@ -20,13 +20,13 @@
       </v-card-text>
 
       <v-card-text class="white--text pt-0">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Picfamily es una empresa dedicada a la venta y reservacion de categorias de objetos, los cuales van de alimentos a electrodomesticos. Tambien ofrecemos servicios orientados a la realizacion de picnis y/o reuniones familiares, para crear momentos inolvidables en familia. Puedes visitarnos en nuestras redes sociales, o ¡Venir con toda tu familia!, creenos, no te arrepentiras
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        &copy;2018 — <strong>PicFamily</strong>
+        &copy;2019 — <strong>PicFamily</strong>
       </v-card-text>
     </v-card>
   </v-footer>

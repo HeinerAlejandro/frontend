@@ -26,13 +26,11 @@
 
 <script>
 
-    import { VueAgile } from 'vue-agile'
     import place from './PlaceComponent'
 
     export default {
         name : 'PlacesSection',
         components : {
-            agile : VueAgile,
             place : place
         },
         data(){
@@ -43,13 +41,15 @@
         },
         methods: {
             getPlacesFromServer(){
-                const url = window.location.origin + '/places'
+                const url = window.location.origin + '/places/'
+                const options = {
+                    method : 'get'
+                }
 
-                fetch(url)
-                    .then(response => (response.json()))
-                    .then(json => {
-                        this.places = json    
-                    })
+                fetch(url, options)
+                    .then(response => response.json())
+                    .then(json => this.places = json)
+                    
             }
         },
         mounted(){

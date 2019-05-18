@@ -1,5 +1,6 @@
 <template>
    <beautiful-chat 
+        class = 'principal-item'
         :open = 'openChat'
         :close = 'closeChat'
         :isOpen = 'open'
@@ -7,6 +8,7 @@
         :onMessageWasSent = 'sendMessage'
         :messageList = 'messages'
         :colors = 'colors'
+        :alwaysScrollToBottom="alwaysScrollToBottom"
    />
 </template>
 
@@ -24,7 +26,6 @@
                     }
                 ],
                 messages: [],
-                newMessages : 0,
                 colors: {
                     header: {
                         bg: '#e38153',
@@ -98,6 +99,11 @@
 </script>
 
 <style>
+
+    .principal-item{
+        z-index: 100;
+    }
+
     .absolute{
         position: fixed;
         top : 85%;

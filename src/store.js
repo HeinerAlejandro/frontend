@@ -1,38 +1,55 @@
 import Vue from 'vue'
 
-const handleErrors = error => {
-    
+const origin =  window.location.origin
+
+const handleError = err => {
+    Vue.notify({
+        group : 'errors',
+        title: 'No se ha podido realizar la operacion',
+        text: 'Operacion de registro rechazada,asegurese, que los datos que proporciona, sean validos'
+    })
 }
 
-const origin =  window.location.origin
+const opWithData = data => {
+    Vue.notify({
+        group : 'success',
+        title: 'Operacion completada',
+        text: '¡Su Registro se realizo satisfactoriamente!'
+    })
+}
 
 var store = {
     debug : true,
     state : {
-        user : {},
-        token : null
+        user : null,
+        token : null,
+        dataShoppingCar: []
     },
-    resolvePromise(promise, operation){
-        promise
-            .then(data => operation(data))
+    setProductsToShoppingCarAction(ItemShoppingCar){
+        this.state.dataShoppingCar.push(ItemShoppingCar)
+    },
+    resolvePromise(promise, operation = null){
+        if(operation)
+            promise
+                .then(data => operation(data))
     },
     initRegistrationAction(data_registration){
 
-        const body = new FormData(data_registration)
-        console.log(body)
+        const body = data_registration
+
+        let headers = new Headers()
+
+        headers.append('Content-Type', 'application/json')
+        
         const options = {
             method : 'post',
-            body
+            body : JSON.stringify(body),
+            headers
         }
 
+        const url = origin + '/registration'
 
-        const url = origin + '/registration/'
-
-        const opWithData = data => {
-            
-        }
-
-        this.fetchData(url, options, opWithData)
+        this.fetchData(url, options)
     },
     initAuthenticationAction(data_login){
 
@@ -60,25 +77,33 @@ var store = {
                     title: 'Operacion completada',
                     text: '¡Su autenticacion se realizo satisfactoriamente!'
                 })
+
+                this.getUserAction()
             }) 
         }
 
         this.fetchData(url, options, opWithData)
     },
     setToken(token){
-        this.token = token
+        this.state.token = token
     },
     getUserAction(){
-        if(this.token){
+
+        const token = localStorage.getItem('token')
+
+        if(token)
+            this.state.token = token
+
+        if(this.state.token){
             const headers = new Headers()
-            headers.append('Authorization', 'Token ' + this.token)
+            headers.append('Authorization', 'Token ' + this.state.token)
 
             let options = {
                 method : 'get',
                 headers
             }
 
-            const url = origin + '/user'
+            const url = origin + '/user/'
 
             const opWithData = data => {
                 this.resolvePromise(data, (data) => this.setUser(data))
@@ -88,21 +113,21 @@ var store = {
         }
     },
     setUser(user){
-        this.user = user
+        this.state.user = user
     },
-    fetchData(path, options, opWithData = null, handleError = handleErrors){
-
+    fetchData(path, options, opWithData = opWithData, handleError = handleError){
+        
         fetch(path, options)
             .then( response => {
-               
+                
                 const json = response.json()
-               
+                
                 if(response.ok)
                     opWithData(json)
                 else
                     throw json
             })
-            .catch(err =>handleError(err))
+            .catch(err => handleError(err))
     }
 }
 

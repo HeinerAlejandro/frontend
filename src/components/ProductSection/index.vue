@@ -1,6 +1,6 @@
 <template>
     <v-container
-        class = 'product-section'
+        id = 'product-section'
         tag = 'section'
         grid-list-lg
         fluid
@@ -14,24 +14,7 @@
             Opps, parece que no hay productos registrados o su internet es muy lento
         </v-alert>
 
-        <v-layout>
-            <v-flex lg2 md2 xs8 offset-lg1 offset-xs1 offset-md1 align-content-center>
-                <v-select
-                    v-show="show_select"
-                    class = 'select-view' 
-                    flat
-                    :items = 'select_items'
-                    label="tipo de vista"
-                    >
-                    <div 
-                        for = 'style in select_items'>
-                        {{style}}
-                    </div>
-                </v-select>
-            </v-flex>
-        </v-layout>
-
-       
+        
         <v-container grid-list-lg align-center>
             <v-layout row wrap justify-center>
                 <v-flex
@@ -55,7 +38,7 @@
                     v-model = "page"
                     @input = "obtainSelectedPage"
                     :length = "(products.length/max_show) + 1"
-                    :total-visible = "8"
+                    :total-visible = "4"
                 />
             </v-flex>
         </v-layout>
@@ -72,15 +55,15 @@
             return({
                 products : [],
                 products_show : [],
-                view_type : 'complete',
                 alert : false,
-                select_items : ['CARTAS', 'MINIATURAS'],
-                show_select : window.screen.width < 1024 || !this.products ? false : true,
                 page : 1,
                 max_show : window.screen.width <= 950 ? 1 : 8,
             })
         },
         methods : {
+            obtainSelectOption(value){
+                console.log(value)
+            },
             obtainSelectedPage(value){
                 this.page = value
 
