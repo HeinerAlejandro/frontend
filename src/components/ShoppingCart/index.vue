@@ -12,7 +12,6 @@
             :items = 'sharedState.dataShoppingCar'
             :open = 'open'
             :controlModal = 'controlModal'
-            :delete_selected = 'delete_selected'
             :createOrder = 'createOrder'
             :fetchData = 'fetchData'
         />
@@ -37,21 +36,9 @@
             controlModal(){
                 this.open = !this.open
             },
-            delete_selected(){
-                
-                console.log(Store.state.dataShoppingCar[0])
-
-                for(let i = 0; i < Store.state.dataShoppingCar.length; i ++)
-                    if(Store.state.dataShoppingCar[i].selected)
-                        Store.state.dataShoppingCar.splice(i, 1)
-
-                console.log(Store.state.dataShoppingCar[0])
-            },
             createOrder(){
 
-                var productsInShoppingCart = this.sharedState.dataShoppingCar
-
-                const data = productsInShoppingCart.map(product => {
+                const data = this.sharedState.dataShoppingCar.map(product => {
                     delete product.selected
                     return product
                 })

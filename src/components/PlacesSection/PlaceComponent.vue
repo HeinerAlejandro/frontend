@@ -48,6 +48,7 @@
 
     
     import Store from './../../store'
+    import { getCookie } from '../../utils'
 
     export default {
         name : 'place',
@@ -65,25 +66,15 @@
         methods:{
             fetchCreateReservation(){
                 
-                const url = window.location.origin + '/reservation/'
-               
+                console.log(this.place)
+
                 const body = {
-                    title: this.place.title,
-                    date: this.date
+                    title : this.place.title,
+                    date : this.date
                 }
 
-                let headers = new Headers()
+                Store.createReservationAction(body)
 
-                headers.append('Content-Type', 'application/json')
-                headers.append('Authorization', 'token ' + localStorage.getItem('token'))
-
-                const options = {
-                    method: 'post',
-                    body : JSON.stringify(body),
-                    headers
-                }
-
-                Store.fetchData(url, options)
             }
         }
     }

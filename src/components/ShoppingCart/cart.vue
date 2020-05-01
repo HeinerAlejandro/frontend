@@ -46,10 +46,11 @@
 <script>
     import Store from './../../store.js'
     import Vue from 'vue'
+    import { getCookie } from '../../utils'
 
     export default {
         name: 'cart',
-        props: ['items', 'open', 'controlModal', 'createOrder', 'fetchData', 'delete_selected'],
+        props: ['items', 'open', 'controlModal', 'createOrder', 'fetchData'],
         data(){
             return({
                 sharedState: Store.state,
@@ -64,8 +65,16 @@
             })
         },
         methods: {
-            delete_selected(){
-                this.props.delete_selected()
+            delete_selected(all = false){
+
+                const lengthShoppingCart = Store.state.dataShoppingCar.length
+                
+                Store.state.dataShoppingCar.map((product, index) => {
+                    console.log(index)
+                    console.log(product)
+                    if((product.selected))
+                        Store.state.dataShoppingCar.splice(lengthShoppingCart - index -1, 0)
+                })
             },
             addTotalPrice(order){
 
@@ -83,7 +92,7 @@
 
                 headers.append('Content-Type', 'application/json')
                 headers.append('Authorization', 'token ' + token)
-
+                headers.append('X-CSRFToken', getCookie('csrftoken'))
                 order = this.addTotalPrice(order)
                 
                 let url = window.location.origin + '/order/'
@@ -100,14 +109,16 @@
 
                     this.$forceUpdate()
 
+                    this.delete_selected(all = true)
+
                     Vue.notify({
                         group : 'success',
                         title: 'Operacion completada',
-                        text: '¡Ha reservado una cabaña, satisfactoriamente!'
+                        text: '¡Su compra se realizo exitosamente!'
                     })
                 }
            
-                this.fetchData(url, option, OpWithData)
+                Store.fetchData(url, option, OpWithData)
             }
         },
         computed: {

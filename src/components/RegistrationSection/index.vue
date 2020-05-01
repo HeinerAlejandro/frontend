@@ -63,7 +63,8 @@
 			registration(){
 				
 				const data = {
-					username : document.forms.form_registration.name_r.value + document.forms.form_registration.lastname_r.value,
+					first_name : document.forms.form_registration.name_r.value,
+					last_name : document.forms.form_registration.lastname_r.value,
 					email: document.forms.form_registration.email_r.value,
 					password1: document.forms.form_registration.password_r.value,
 					password2: document.forms.form_registration.password_r.value

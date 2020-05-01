@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { getCookie } from './utils';
 
 const origin =  window.location.origin
 
@@ -10,7 +11,7 @@ const handleError = err => {
     })
 }
 
-const opWithData = data => {
+const opWithData = (data = null) => {
     Vue.notify({
         group : 'success',
         title: 'Operacion completada',
@@ -40,6 +41,7 @@ var store = {
         let headers = new Headers()
 
         headers.append('Content-Type', 'application/json')
+        headers.append('X-CSRFToken', getCookie('csrftoken'))
         
         const options = {
             method : 'post',
@@ -53,13 +55,17 @@ var store = {
     },
     initAuthenticationAction(data_login){
 
-        const body = new FormData()
+        let body = new FormData()
+        let headers = new Headers()
 
         body.append('email', data_login.email)
         body.append('password', data_login.password)
 
+        headers.append('X-CSRFToken', getCookie('csrftoken'))
+        
         let options = {
             method : 'post',
+            headers,
             body
         }
         
@@ -84,6 +90,39 @@ var store = {
 
         this.fetchData(url, options, opWithData)
     },
+    createReservationAction(data){
+
+        const url = window.location.origin + '/places/'+ data.title +'/reservations/'
+
+        let headers = new Headers()
+
+        headers.append('Content-Type', 'application/json')
+        headers.append('Authorization', 'token ' + localStorage.getItem('token'))
+        headers.append('X-CSRFToken', getCookie('csrftoken'))
+
+        const options = {
+            method: 'post',
+            body : JSON.stringify(data),
+            headers
+        }
+
+        const opWithData = (data) => {
+           
+            this.resolvePromise(data, data => {
+                const detail = data.detail
+
+                Vue.notify({
+                    group : 'success',
+                    title: 'Operacion completada',
+                    text: detail
+                })
+            })
+
+        }
+
+        this.fetchData(url, options, opWithData)
+
+    },
     setToken(token){
         this.state.token = token
     },
@@ -96,8 +135,10 @@ var store = {
 
         if(this.state.token){
             const headers = new Headers()
-            headers.append('Authorization', 'Token ' + this.state.token)
 
+            headers.append('Authorization', 'Token ' + this.state.token)
+            headers.append('X-CSRFToken', getCookie('csrftoken'))
+       
             let options = {
                 method : 'get',
                 headers
@@ -119,13 +160,23 @@ var store = {
         
         fetch(path, options)
             .then( response => {
+
+                let json = null
                 
-                const json = response.json()
                 
-                if(response.ok)
-                    opWithData(json)
-                else
-                    throw json
+                if(response.ok){
+                    try{
+                    
+                        json = response.json()
+                        opWithData(json)
+
+                    }catch(err){
+                        
+                        opWithData()
+
+                    }
+                }else
+                    throw('')
             })
             .catch(err => handleError(err))
     }

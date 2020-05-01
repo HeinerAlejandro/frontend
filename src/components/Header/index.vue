@@ -69,7 +69,7 @@
                         'Authorization' : 'Token ' + localStorage.getItem('token')
                     }
                 })
-                .then((response) => {
+                .then(response => {
                     if(response.ok){
                         Store.state.user = null
                         Store.state.token = null

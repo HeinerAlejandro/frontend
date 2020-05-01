@@ -13,6 +13,9 @@
 </template>
 
 <script>
+
+    import { getCookie } from '../../utils';
+
     export default ({
         name : 'ButtonChatBot',
         data(){
@@ -68,7 +71,8 @@
                             message : message.data.text
                         }),
                         headers : {
-                            'Content-Type':'application/json'
+                            'Content-Type':'application/json',
+                            'X-CSRFToken': getCookie('csrftoken') 
                         }
                     })
                         .then(response => (
